@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+}
+
+.top-container {
+  background-color: red;
+  height: 200px;
+  position: absolute;
+  top: 400px;
+  left: 400px;
+  width: 200px;
+}
+
+.middle-container {
+  background-color: blue;
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  top: 200px;
+  left: 200px;
+}
+
+.bottom-container {
+  background-color: yellow;
+  height: 200px;
+  width: 200px;
+}
