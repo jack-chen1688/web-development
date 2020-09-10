@@ -13,9 +13,10 @@ h1 {
 }
 
 h2 {
+  color: #66BFBF;
   font-size: 2.5rem;
   font-family: 'Montserrat', sans-serif;
-  color: #66BFBF;
+  font-weight: normal;
 }
 
 h3 {
@@ -42,6 +43,7 @@ a {
 .skill-image {
   width: 50px
 }
+
 .top-container {
   background-color: #E4F9F4;
   position: relative;
