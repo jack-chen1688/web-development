@@ -31,6 +31,9 @@ h3 {
   bottom: 300px;
 }
 
+.skill-image {
+  width: 50px
+}
 .top-container {
   background-color: #E4F9F4;
   position: relative;
