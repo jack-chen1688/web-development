@@ -72,6 +72,7 @@ p {
   #title {
     text-align: center;
   }
+
   .title-image {
     transform: rotate(0deg);
     position: static;
@@ -140,7 +141,7 @@ p {
   text-align: center;
   background-color: #ff4c68;
   color: #FFF;
-  padding: 100px 350px;
+  padding: 7% 10%;
 }
 
 #footer {
