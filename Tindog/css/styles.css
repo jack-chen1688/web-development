@@ -68,6 +68,15 @@ p {
   right:30%;
 }
 
+@media (max-width: 1028px) {
+  #title {
+    text-align: center;
+  }
+  .title-image {
+    transform: rotate(0deg);
+    position: static;
+  }
+}
 /* Feature section */
 #features {
   padding: 7% 15%;
