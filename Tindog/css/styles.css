@@ -136,3 +136,10 @@ p {
   padding: 3% 2%;
   text-align: center;
 }
+
+#cta {
+  text-align: center;
+  background-color: #ff4c68;
+  color: #FFF;
+  padding: 100px 350px;
+}
