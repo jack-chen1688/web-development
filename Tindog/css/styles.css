@@ -90,9 +90,8 @@ p {
   padding: 5%;
 }
 
-.fas {
+.fa-4x {
   color: #ef8172;
-  font-size: 4rem;
   margin-bottom: 1.8rem
 }
 
@@ -142,4 +141,18 @@ p {
   background-color: #ff4c68;
   color: #FFF;
   padding: 100px 350px;
+}
+
+#footer {
+  text-align: center;
+  background-color: #FFF;
+  margin-bottom: 100px;
+}
+
+/* .footer {
+  margin: 100px 5% 20px;
+} */
+
+.footer-icon {
+  margin:100px 10px 20px;
 }
