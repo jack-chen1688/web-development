@@ -29,14 +29,25 @@ function playAudio(keyPressed) {
   }
   if (audio != null)
     audio.play();
+
+}
+
+function buttonAnimation(key) {
+  var buttonPressed = document.querySelector("."+ key);
+  buttonPressed.classList.add("pressed");
+  setTimeout(function() {
+    buttonPressed.classList.remove("pressed");
+  }, 100);
 }
 
 for (var i=0; i<targets.length; i++) {
   targets[i].addEventListener("click", function () {
     playAudio(this.innerHTML);
+    buttonAnimation(this.innerHTML);
   })
 }
 
 document.addEventListener("keydown", function(event) {
   playAudio(event.key);
+  buttonAnimation(event.key);
 })
