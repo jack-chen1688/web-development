@@ -8,7 +8,7 @@ function gameInit() {
 }
 
 function makeSound(sound) {
-  let audio = new Audio("sounds/" + sound + ".mp3");
+  var audio = new Audio("sounds/" + sound + ".mp3");
   audio.play();
 }
 
@@ -29,11 +29,11 @@ function nextLevel() {
 }
 
 function buttonPress(button) {
-  button.classList.add("pressed");
+  $(button).addClass("pressed");
   setTimeout(function() {
-    button.classList.remove("pressed");
-  }, 10);
-  makeSound(button.classList[1]);
+    $(button).removeClass("pressed");
+  }, 100);
+  makeSound($(button).attr("id"));
 }
 
 function gameOver() {
@@ -61,25 +61,20 @@ $(document).keydown(function() {
 })
 
 $(".btn").click(function() {
+  buttonPress(this);
   if (state == "start") {
     if (currentPatternIndex < level) {
-      buttonPress(this);
-      if (this.classList.contains(gamePattern[currentPatternIndex])) {
+      if ($(this).attr("id") == gamePattern[currentPatternIndex]) {
         currentPatternIndex ++; // check next key
         if (currentPatternIndex == level)
           // The last correct button is pressed for the current level.
           // Let's go to the next Level.
           setTimeout(nextLevel, 500);
       }
-      else {
+      else
         gameOver();
-        return;
-      }
     }
   }
   else
-  {
-      buttonPress(this);
       gameOver();
-  }
 })
