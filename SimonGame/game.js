@@ -16,8 +16,8 @@ function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
   var randomChosenColor = buttonColors[randomNumber];
   gamePattern.push(randomChosenColor);
+  buttonPress($("#" + randomChosenColor));
   makeSound(randomChosenColor);
-  console.log(level, gamePattern);
 }
 
 function nextLevel() {
