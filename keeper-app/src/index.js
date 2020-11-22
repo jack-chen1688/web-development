@@ -1,3 +1,8 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+
+ReactDOM.render(<App />, document.getElementById("root"));
 //1. Create a new React app.
 //2. Create a App.jsx component.
 //3. Create a Header.jsx component that renders a <header> element
