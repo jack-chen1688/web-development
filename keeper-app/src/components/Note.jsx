@@ -1,9 +1,10 @@
+import { Delete } from "@material-ui/icons";
+// import DeleteIcon from "@material-ui/icons/Delete";
+
 import React from "react";
 
 function Note(props) {
-  function handleClick(event) {
-    // event.preventDefault();
-    // console.log(id);
+  function handleClick() {
     props.onDelete(props.id);
   }
 
@@ -11,7 +12,9 @@ function Note(props) {
     <div className="note">
       <h1>{props.title}</h1>
       <p>{props.content}</p>
-      <button onClick={handleClick}>DELETE</button>
+      <button onClick={handleClick}>
+        <Delete />
+      </button>
     </div>
   );
 }
