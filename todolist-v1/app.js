@@ -29,11 +29,12 @@ app.post("/", function(req, res) {
 });
 
 app.get("/work", function(req, res) {
-  res.render("list", {listTitle: "Work", items: workItems})
+  res.render("list", {listTitle: "Work List", items: workItems})
 });
 
 app.post("/work", function(req, res) {
   const todo = req.body.todo;
+  console.log(req.body)
   workItems.push(todo);
   res.redirect("/work");
 })
