@@ -15,7 +15,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const posts = [];
+
 app.get('/', function(req, res) {
+  console.log(posts);
   res.render('home', {content: homeStartingContent});
 });
 
@@ -32,11 +35,11 @@ app.get('/compose', function(req, res) {
 });
 
 app.post('/compose', function(req, res) {
-  const title= req.body.postTitle;
-  console.log(title);
-  // res.render('compose');
-  res.render('compose', {postTitle:title});
-})
+  const post = {title: req.body.postTitle, body: req.body.postBody};
+  posts.push(post);
+  res.redirect('/');
+});
+
 app.listen(3000, function() {
   console.log("Server started on port 3000");
 });
