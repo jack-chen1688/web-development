@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const date = require(__dirname + "/date.js");
 const app = express();
 
 const items = [];
@@ -10,16 +11,8 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 app.get("/", function(req, res) {
-  // var today = new Date(2020,12,7)
-  const today = new Date();
-  const options = {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric'
-  }
-
-  const date = today.toLocaleDateString("en-us", options);
-  res.render("list", {listTitle: date, items: items});
+  currentDate = date.getDate()
+  res.render("list", {listTitle: currentDate, items: items});
 });
 
 app.post("/", function(req, res) {
@@ -37,11 +30,12 @@ app.post("/work", function(req, res) {
   console.log(req.body)
   workItems.push(todo);
   res.redirect("/work");
-})
+});
 
 app.get("/about", function(req, res) {
   res.render('about');
-})
+});
+
 app.listen(3000, function() {
   console.log("Server started on part 3000");
-})
+});
