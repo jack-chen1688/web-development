@@ -23,10 +23,11 @@ app.get('/', function(req, res) {
 });
 
 app.get('/posts/:postid', function(req,res) {
-  postId = req.params.postid;
-  posts.forEach((post) => {
-    if (post.title === postId)
-      console.log("Match found.")
+  postId = _.lowerCase(req.params.postid);
+  posts.forEach(post => {
+    title = _.lowerCase(post.title);
+    if (title === postId)
+      res.render('post', {post:post})
   });
 });
 
