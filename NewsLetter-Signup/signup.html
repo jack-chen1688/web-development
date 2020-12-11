@@ -18,13 +18,12 @@
 </head>
 
 <body class="text-center">
-  <form class="form-signin">
+  <form class="form-signin" action="/" method="post">
     <img class="mb-4" src="images/envelope.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Sign up to My Newsletter</h1>
-    <input type="text" class="form-control first" placeholder="First Name" required autofocus>
-    <input type="text" class="form-control second" placeholder="Last Name" required>
-    <input type="email" class="form-control third" placeholder="Email address" required>
-
+    <input type="text" class="form-control first" placeholder="First Name" name="firstName" required autofocus>
+    <input type="text" class="form-control second" placeholder="Last Name" name="lastName" required>
+    <input type="email" class="form-control third" placeholder="Email address" name="email" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
     <p class="mt-5 mb-3 text-muted">&copy; Learning Fun Tutoring</p>
     <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

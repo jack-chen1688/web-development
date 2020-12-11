@@ -15,7 +15,9 @@ app.get("/", function(req, res) {
 })
 
 app.post("/", function(req, res) {
-  res.send("post received");
+    console.log(req.body.firstName)
+    console.log(req.body.lastName)
+    console.log(req.body.email)
 })
 
 app.listen(3000, function() {
