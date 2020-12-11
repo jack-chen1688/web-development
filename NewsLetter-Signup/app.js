@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.use(express.static("."));
+app.use(express.static("public"));
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/signup.html");
