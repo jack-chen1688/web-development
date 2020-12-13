@@ -43,22 +43,12 @@ app.post("/", function(req, res) {
 
   req = https.request(url, options, function(response) {
     response.on('data', function(data) {
-      // console.log(JSON.parse(data));
       jsonResponse = JSON.parse(data);
-      // if ((jsonResponse.error_count != undefined) &&
-      //     (jsonResponse.error_count == 0)) {
-      //   console.log(jsonResponse.new_members[0].status)
-      //   res.sendFile(__dirname + "/success.html");
-      // } else {
-      //   res.send(jsonResponse);
-      // }
-
       if (response.statusCode == 200) {
         res.sendFile(__dirname + "/success.html");
       } else {
         res.sendFile(__dirname + "/failure.html");
       }
-
     });
   });
 
