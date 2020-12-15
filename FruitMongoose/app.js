@@ -11,13 +11,14 @@ const fruitSchema = new mongoose.Schema({
 //Automatically create a collection of "fruits"
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const fruit = new Fruit({
+const apple = new Fruit({
   name: "Apple",
   rating: 7,
   review: "Pretty solid as a fruit"
 });
 
-//fruit.save();
+apple.save();
+
 const kiwi = new Fruit({
   name: "Kiwi",
   rating: 8,
@@ -43,16 +44,3 @@ Fruit.insertMany([kiwi, orange, banana], function(err) {
     console.log("Successfully inserted all the fruits into fruitsDB");
   }
 })
-// const personSchema = new mongoose.Schema({
-//   name: String,
-//   age: Number
-// });
-//
-// const Person = mongoose.model("Person", personSchema);
-//
-// const person = new Person({
-//   name: "John",
-//   age: 32
-// });
-//
-// person.save();
