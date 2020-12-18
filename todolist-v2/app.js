@@ -16,16 +16,17 @@ app.use(express.static("public"));
 
 const workItems = [];
 
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/todoDB', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  // useFindAndModify: false
 });
 
+// mongoose.set('useFindAndModify', false);
+
 const todoSchema = mongoose.Schema({
-  "name": {
-    type: String,
-    required: [true, "The name of todo cannot be empty"]
-  }
+  "name": String
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
@@ -38,6 +39,7 @@ const item1 = new Todo({
 const item2 = new Todo({
   name: "Eat Food"
 });
+
 const defaultItems = [item0, item1, item2];
 
 app.get("/", function(req, res) {
@@ -71,14 +73,16 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
 
   const item = req.body.newItem;
+  newTodo = new Todo({
+    name: item
+  });
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+  newTodo.save(function(err) {
+    if (err)
+      console.log(err);
+    else
+      res.redirect("/");
+  });
 });
 
 app.get("/work", function(req, res) {
@@ -92,6 +96,18 @@ app.get("/about", function(req, res) {
   res.render("about");
 });
 
+app.post("/delete", function(req, res) {
+  //console.log(req.body.checkbox)
+  itemId = req.body.checkbox
+  Todo.findByIdAndRemove({_id:itemId}, function(err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("Item of ID " + itemId + " is removed successfully.")
+      res.redirect("/");
+    }
+  })
+})
 app.listen(3000, function() {
   console.log("Server started on port 3000");
 });
