@@ -1,6 +1,7 @@
 //jshint esversion:6
 
 const express = require("express");
+const _ = require('lodash');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
@@ -16,11 +17,11 @@ app.use(express.static("public"));
 
 const workItems = [];
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost:27017/todoDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  // useFindAndModify: false
+  useFindAndModify: false
 });
 
 // mongoose.set('useFindAndModify', false);
@@ -41,6 +42,39 @@ const item2 = new Todo({
 });
 
 const defaultItems = [item0, item1, item2];
+
+const listSchema = mongoose.Schema({
+  name: String,
+  items: [todoSchema]
+});
+
+const List = mongoose.model('List', listSchema);
+
+app.get('/:customListName', function (req, res) {
+
+  customListName = _.camelCase(req.params.customListName);
+
+  List.findOne({name: customListName}, function(err, foundList) {
+    if (!err) {
+      if (!foundList) {
+        //create the default list
+        const customList = new List({
+          name: customListName,
+          items: defaultItems
+        });
+        customList.save();
+        res.redirect("/" + customListName);
+      } else {
+        //show existing list
+        res.render("list", {
+          listTitle: foundList.name,
+          newListItems: foundList.items
+        });
+      }
+    }
+  });
+  // list.save();
+})
 
 app.get("/", function(req, res) {
 
