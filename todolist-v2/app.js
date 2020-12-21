@@ -18,7 +18,8 @@ app.use(express.static("public"));
 const workItems = [];
 
 // mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/todoDB', {
+// mongoose.connect('mongodb://localhost:27017/todoDB', {
+mongoose.connect('mongodb+srv://xuehua:Test123@cluster0.wcfjv.mongodb.net/todoDB?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
@@ -53,7 +54,7 @@ const List = mongoose.model('List', listSchema);
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/:customListName', function (req, res) {
-  customListName = _.camelCase(req.params.customListName);
+  customListName = _.capitalize(req.params.customListName);
 
   List.findOne({name: customListName}, function(err, foundList) {
     if (!err) {
@@ -64,6 +65,7 @@ app.get('/:customListName', function (req, res) {
           items: defaultItems
         });
         customList.save();
+        console.log("redirect");
         setTimeout(()=> res.redirect("/" + customListName), 500);
       } else {
         //show existing list
