@@ -147,16 +147,25 @@ app.get("/about", function(req, res) {
 });
 
 app.post("/delete", function(req, res) {
-  //console.log(req.body.checkbox)
+  listTitle = req.body.list
   itemId = req.body.checkbox
-  Todo.findByIdAndRemove({_id:itemId}, function(err) {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log("Item of ID " + itemId + " is removed successfully.")
-      res.redirect("/");
-    }
-  })
+
+  if (listTitle === "Today") {
+    Todo.findByIdAndRemove({_id:itemId}, function(err) {
+      if (!err) {
+        console.log("Item of ID " + itemId + " is removed successfully.")
+        res.redirect("/");
+      }
+    });
+  } else {
+    List.findOneAndUpdate({name: listTitle},
+      {$pull: {items: {_id:itemId}}}, function(err) {
+        if (!err) {
+          console.log("Item of ID " + itemId + " is removed successfully.")
+          res.redirect("/" + listTitle);
+        }
+      });
+  }
 })
 app.listen(3000, function() {
   console.log("Server started on port 3000");
