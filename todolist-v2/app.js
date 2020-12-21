@@ -122,11 +122,16 @@ app.post("/", function(req, res) {
   } else {
     newList = List.findOneAndUpdate({name: listName},
       {$push: {items: newTodo}}, function(err) {
-        if (err)
-          console.log(err);
-        else
+        if (!err)
           res.redirect("/" + listName)
       });
+    // newList = List.findOne({name: listName}, function(err, listFound) {
+    //   if (!err) {
+    //     listFound.items.push(newTodo);
+    //     listFound.save();
+    //     res.redirect("/" + listName);
+    //   }
+    // })
   }
 });
 
