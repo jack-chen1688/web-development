@@ -50,8 +50,10 @@ const listSchema = mongoose.Schema({
 
 const List = mongoose.model('List', listSchema);
 
-app.get('/:customListName', function (req, res) {
+app.get('/favicon.ico', (req, res) => res.status(204));
 
+app.get('/:customListName', function (req, res) {
+  console.log(req.params.customListName);
   customListName = _.camelCase(req.params.customListName);
 
   List.findOne({name: customListName}, function(err, foundList) {
@@ -73,7 +75,6 @@ app.get('/:customListName', function (req, res) {
       }
     }
   });
-  // list.save();
 })
 
 app.get("/", function(req, res) {
@@ -94,9 +95,8 @@ app.get("/", function(req, res) {
         console.log("redirect")
         setTimeout(()=>res.redirect("/"), 500);
       } else {
-        const day = date.getDate();
         res.render("list", {
-          listTitle: day,
+          listTitle: "Today",
           newListItems: foundItems
         });
       }
@@ -107,16 +107,29 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
 
   const item = req.body.newItem;
-  newTodo = new Todo({
-    name: item
-  });
+  const listName = req.body.list;
 
-  newTodo.save(function(err) {
-    if (err)
-      console.log(err);
-    else
-      res.redirect("/");
-  });
+  if (listName === "Today") {
+    newTodo = new Todo({
+      name: item
+    });
+
+    newTodo.save(function(err) {
+      if (err)
+        console.log(err);
+      else
+        res.redirect("/");
+    });
+
+  } else {
+    newList = List.findOneAndUpdate({name: listName},
+      {$push: {items: {name: item}}}, function(err) {
+        if (err)
+          console.log(err);
+        else
+          res.redirect("/" + listName)
+      });
+  }
 });
 
 app.get("/work", function(req, res) {
