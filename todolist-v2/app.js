@@ -53,7 +53,6 @@ const List = mongoose.model('List', listSchema);
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/:customListName', function (req, res) {
-  console.log(req.params.customListName);
   customListName = _.camelCase(req.params.customListName);
 
   List.findOne({name: customListName}, function(err, foundList) {
@@ -65,7 +64,7 @@ app.get('/:customListName', function (req, res) {
           items: defaultItems
         });
         customList.save();
-        res.redirect("/" + customListName);
+        setTimeout(()=> res.redirect("/" + customListName), 500);
       } else {
         //show existing list
         res.render("list", {
@@ -109,21 +108,20 @@ app.post("/", function(req, res) {
   const item = req.body.newItem;
   const listName = req.body.list;
 
-  if (listName === "Today") {
-    newTodo = new Todo({
-      name: item
-    });
+  newTodo = new Todo({
+    name: item
+  });
 
+  if (listName === "Today") {
     newTodo.save(function(err) {
       if (err)
         console.log(err);
       else
         res.redirect("/");
     });
-
   } else {
     newList = List.findOneAndUpdate({name: listName},
-      {$push: {items: {name: item}}}, function(err) {
+      {$push: {items: newTodo}}, function(err) {
         if (err)
           console.log(err);
         else
