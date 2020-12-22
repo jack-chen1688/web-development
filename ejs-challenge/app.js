@@ -1,6 +1,7 @@
 //jshint esversion:6
 
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
@@ -18,16 +19,42 @@ app.use(express.static("public"));
 
 const posts = [];
 
-app.get('/', function(req, res) {
-  res.render('home', {content: homeStartingContent, posts: posts});
+mongoose.connect('mongodb+srv://xuehua:Test123@cluster0.wcfjv.mongodb.net/postDB?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
+postSchema = mongoose.Schema({
+  title: String,
+  body: String
+});
+
+Post = mongoose.model("Post", postSchema);
+
+app.get('/', function(req, res) {
+  Post.find({}, function(err, foundPosts) {
+    if (!err) {
+      res.render('home', {content: homeStartingContent, posts: foundPosts});
+    }
+  });
+});
+
+// app.get('/posts/:postid', function(req,res) {
+//   postId = _.lowerCase(req.params.postid);
+//   posts.forEach(post => {
+//     title = _.lowerCase(post.title);
+//     if (title === postId)
+//       res.render('post', {post:post})
+//   });
+// });
+
 app.get('/posts/:postid', function(req,res) {
-  postId = _.lowerCase(req.params.postid);
-  posts.forEach(post => {
-    title = _.lowerCase(post.title);
-    if (title === postId)
-      res.render('post', {post:post})
+  Post.find({"_id": req.params.postid}, function(err, foundPosts) {
+    if (!err) {
+      console.log(foundPosts)
+      res.render('post', {post: foundPosts[0]})
+    }
   });
 });
 
@@ -43,10 +70,18 @@ app.get('/compose', function(req, res) {
   res.render('compose');
 });
 
+// app.post('/compose', function(req, res) {
+//   const post = {title: req.body.postTitle, body: req.body.postBody};
+//   posts.push(post);
+//   res.redirect('/');
+// });
+
 app.post('/compose', function(req, res) {
-  const post = {title: req.body.postTitle, body: req.body.postBody};
-  posts.push(post);
-  res.redirect('/');
+  const post = new Post({title: req.body.postTitle, body: req.body.postBody});
+  post.save(function(err) {
+    if (!err)
+      res.redirect('/');
+  });
 });
 
 app.listen(3000, function() {
