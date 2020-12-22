@@ -50,10 +50,10 @@ app.get('/', function(req, res) {
 // });
 
 app.get('/posts/:postid', function(req,res) {
-  Post.find({"_id": req.params.postid}, function(err, foundPosts) {
+  Post.findOne({"_id": req.params.postid}, function(err, foundPost) {
     if (!err) {
-      console.log(foundPosts)
-      res.render('post', {post: foundPosts[0]})
+      // console.log(foundPost)
+      res.render('post', {post: foundPost})
     }
   });
 });
